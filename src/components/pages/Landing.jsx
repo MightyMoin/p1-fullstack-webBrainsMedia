@@ -1,15 +1,12 @@
-import { Paper } from '@mui/material'
-import React from 'react'
+import React from "react";
+import MainTable from "../elements/MainTable";
 
 const Landing = () => {
   return (
     <div>
-        <Paper>
-            LANDING PAGE
-        </Paper>
-    
+      <MainTable></MainTable>
     </div>
-  )
-}
+  );
+};
 
-export default Landing
+export default Landing;
