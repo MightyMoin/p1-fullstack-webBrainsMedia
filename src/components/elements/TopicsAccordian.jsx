@@ -4,10 +4,10 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Box } from "@mui/material";
+import NotesModal from "./NotesModal";
 
 const TopicsAccordian = (props) => {
-  const { topicName } = props;
+  const { topicName, topicNotes } = props;
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -15,7 +15,6 @@ const TopicsAccordian = (props) => {
   };
 
   return (
-    <Box sx={{p:0.2}} >
       <Accordion
         expanded={expanded === "panel1"}
         onChange={handleChange("panel1")}
@@ -29,17 +28,15 @@ const TopicsAccordian = (props) => {
             {topicName}
           </Typography>
           <Typography sx={{ color: "text.secondary" }}>
-            I am an accordion
+            {topicNotes?.length} notes
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            Nulla facilisi. Phasellus sollicitudin nulla et quam mattis feugiat.
-            Aliquam eget maximus est, id dignissim quam.
-          </Typography>
+          {topicNotes.map((notes, i) => {
+            return <NotesModal key={i} title={notes} ></NotesModal>
+          })}
         </AccordionDetails>
       </Accordion>
-    </Box>
   );
 };
 
