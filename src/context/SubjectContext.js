@@ -1,5 +1,11 @@
 import { useState, useEffect, createContext } from "react";
-import { addNotes, addSubject, addTopic, getAllData } from "../backend/methods/dbQueries";
+import {
+  addNotes,
+  addSubject,
+  addTopic,
+  getAllData,
+  editNotesDB,
+} from "../backend/methods/dbQueries";
 
 const SubjectContext = createContext();
 
@@ -28,15 +34,22 @@ export const SubjectProvider = ({ children }) => {
     return res;
   };
 
-  const addNote = async (title, notes, subject_id, topic_id ) => {
+  const addNote = async (title, notes, subject_id, topic_id) => {
     const res = await addNotes(title, notes, subject_id, topic_id);
+    if (res) {
+      setSub((prevState) => ({
+        ...prevState,
+        notes: [res, ...prevState.notes],
+      }));
+    }
     return res;
-  }
+  };
 
-  const editNotes = async (notes_id,title, notes ) => {
-    const res = await addNotes(notes_id,title, notes);
+  const editNotes = async (notes_id, title, notes) => {
+    const res = await editNotesDB(notes_id, title, notes);
+    console.log(res);
     return res;
-  }
+  };
 
   useEffect(() => {
     const mainData = async () => {

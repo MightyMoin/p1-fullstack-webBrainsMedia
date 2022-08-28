@@ -43,7 +43,7 @@ export default function NotesModal(props) {
 
   const handleNotesSubmit = async () => {
     const res = await editNotes(notes_id, currTitle, currNotes);
-    if (res) {
+    if (!res) {
       handleClose();
     } else {
       alert("Notes not updated :(");
@@ -99,9 +99,7 @@ export default function NotesModal(props) {
 
             <Button
               variant="contained"
-              onClick={
-                isNewNotes ? handleNewNotesSubmit : handleNotesSubmit
-              }
+              onClick={isNewNotes ? handleNewNotesSubmit : handleNotesSubmit}
               endIcon={<SendIcon />}
             >
               Submit
