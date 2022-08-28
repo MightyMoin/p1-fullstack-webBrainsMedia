@@ -25,7 +25,25 @@ const addTopic = async (name, subjectId) => {
   const res = await addDoc(topicRef, data);
   if (res) return data;
   else return undefined;
+}
 
+const addNotes = async (title, notes, subject_id, topic_id) => {
+  const data = {
+    notes_id: uuid(),
+    title,
+    subject_id,
+    topic_id,
+    notes
+  }
+  const res = await addDoc(notesRef, data);
+  if (res) return data;
+  else return undefined;
+}
+
+const editNotesDB = async (notes_id, title, notes) => {
+    const data = {
+      
+    }
 }
 
 const getAllData = async () => {
@@ -34,9 +52,9 @@ const getAllData = async () => {
   finalData.subjects = subjectData.docs.map(doc => doc.data());
   const topicsData = await getDocs(topicRef);
   finalData.topics = topicsData.docs.map(doc => doc.data());
-  const notesData = await getDocs(topicRef);
+  const notesData = await getDocs(notesRef);
   finalData.notes = notesData.docs.map(doc => doc.data());
   return finalData;
 }
 
-export { addSubject, addTopic, getAllData };
+export { addSubject, addTopic, getAllData, addNotes };
