@@ -1,22 +1,45 @@
 import { useState, useEffect, createContext } from "react";
-import { getAllData } from "../backend/methods/dbQueries";
-
+import { addSubject, addTopic, getAllData } from "../backend/methods/dbQueries";
 
 const SubjectContext = createContext();
 
 export const SubjectProvider = ({ children }) => {
   const [sub, setSub] = useState(null);
 
-  useEffect( () => {
-    const mainData = async () => {
-        const res = await getAllData();
-        setSub(res);
+  const addNewSubject = async (name) => {
+    const res = await addSubject(name);
+    if (res) {
+      setSub((prevState) => ({
+        ...prevState,
+        subjects: [res, ...prevState.subjects],
+      }));
     }
+    return res;
+  };
+
+  const addNewTopic = async (name, subject_id) => {
+    const res = await addTopic(name, subject_id);
+    if (res) {
+      setSub((prevState) => ({
+        ...prevState,
+        topics: [res, ...prevState.topics],
+      }));
+    }
+    return res;
+  };
+
+  useEffect(() => {
+    const mainData = async () => {
+      const res = await getAllData();
+      setSub(res);
+    };
     mainData();
-  }, [])
+  }, []);
 
   return (
-    <SubjectContext.Provider value={{ sub, setSub }}>
+    <SubjectContext.Provider
+      value={{ sub, setSub, addNewSubject, addNewTopic }}
+    >
       {children}
     </SubjectContext.Provider>
   );

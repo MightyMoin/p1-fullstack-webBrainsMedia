@@ -20,32 +20,31 @@ const style = {
   p: 4,
 };
 
-export default function AddSubjectModal() {
+export default function AddTopicsModal({ subject_id }) {
   const [open, setOpen] = useState(false);
-  const [subject, setSubject] = useState("");
+  const [topic, setTopic] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const { addNewSubject } = useContext(SubjectContext);
+  const { addNewTopic } = useContext(SubjectContext);
 
   const handleChange = (e) => {
-    setSubject(e.target.value);
+    setTopic(e.target.value);
   };
 
-  const handleSubjectSubmit = async () => {
-    const res = await addNewSubject(subject);
+  const handleTopicSubmit = async () => {
+    const res = await addNewTopic(topic, subject_id);
     if (res) {
       handleClose();
     } else {
-      alert("Subject is not been added :(");
+      alert("Topic is not been added :(");
     }
   };
 
   return (
     <div>
-      <Button onClick={handleOpen}>
-        Add Subject
-        <AddIcon />{" "}
+      <Button onClick={handleOpen} variant="contained" startIcon={<AddIcon />}>
+        Add
       </Button>
       <Modal
         aria-labelledby="transition-modal-title"
@@ -61,18 +60,18 @@ export default function AddSubjectModal() {
         <Fade in={open}>
           <Box sx={style}>
             <Typography id="transition-modal-title" variant="h6" component="h2">
-              Add a new subject
+              Add a new topic
             </Typography>
             <Typography id="transition-modal-description" sx={{ mt: 2 }}>
               <TextField
                 id="outlined-textarea"
-                label="Subject"
+                label="Topic"
                 placeholder="Eg: Maths, Physics etc"
                 fullWidth
                 onChange={(e) => handleChange(e)}
               />
             </Typography>
-            <Button onClick={() => handleSubjectSubmit()}>Submit</Button>
+            <Button onClick={() => handleTopicSubmit()}>Submit</Button>
           </Box>
         </Fade>
       </Modal>
