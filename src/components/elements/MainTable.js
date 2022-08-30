@@ -19,18 +19,34 @@ export default function StickyHeadTable() {
     const res = await deleteSub(subject_id);
   };
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ height: "80vh" }}>
+    <Paper sx={{ overflow: "hidden" }}>
+      <TableContainer sx={{ height: "75vh" }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              <TableCell key="subjects" style={{ minWidth: 170 }}>
-                <Typography variant="h5" gutterBottom>
+              <TableCell
+                sx={{ bgcolor: "#16213E", color: 'White', borderRight: "1px solid #0F3460" }}
+                key="subjects"
+                style={{ minWidth: 170 }}
+              >
+                <Typography
+                  sx={{ fontWeight: "bold" }}
+                  variant="h5"
+                  gutterBottom
+                >
                   Subjects
                 </Typography>
               </TableCell>
-              <TableCell key="topics" style={{ minWidth: 170 }}>
-                <Typography variant="h5" gutterBottom>
+              <TableCell
+                sx={{ bgcolor: "#16213E", color: 'White' }}
+                key="topics"
+                style={{ minWidth: 170 }}
+              >
+                <Typography
+                  sx={{ fontWeight: "bold" }}
+                  variant="h5"
+                  gutterBottom
+                >
                   Topics
                 </Typography>
               </TableCell>
@@ -40,7 +56,7 @@ export default function StickyHeadTable() {
             {sub?.subjects.map((row) => {
               return (
                 <TableRow role="checkbox" tabIndex={-1} key={row.subject_id}>
-                  <TableCell>
+                  <TableCell sx={{ borderRight: "1px solid #CFD2CF" }}>
                     <Box display="flex" alignItems="center">
                       <Typography display="inline-block" variant="h6">
                         {row.name}

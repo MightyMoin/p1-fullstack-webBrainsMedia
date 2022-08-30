@@ -42,8 +42,8 @@ export default function AddSubjectModal() {
   };
 
   return (
-    <div>
-      <Button onClick={handleOpen} startIcon={<AddIcon />}>
+    <Box p={3}>
+      <Button color="success" variant="contained" onClick={handleOpen} startIcon={<AddIcon />}>
         Add Subject
       </Button>
       <Modal
@@ -75,6 +75,6 @@ export default function AddSubjectModal() {
           </Box>
         </Fade>
       </Modal>
-    </div>
+    </Box>
   );
 }

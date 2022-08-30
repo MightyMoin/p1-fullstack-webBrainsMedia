@@ -127,6 +127,7 @@ export default function NotesModal(props) {
 
             <Button
               variant="contained"
+              sx={{ marginTop: 2 }}
               onClick={isNewNotes ? handleNewNotesSubmit : handleNotesSubmit}
               endIcon={<SendIcon />}
             >
