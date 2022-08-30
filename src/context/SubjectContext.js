@@ -5,6 +5,8 @@ import {
   addTopic,
   getAllData,
   editNotesDB,
+  deleteNotes,
+  deleteTopic,
 } from "../backend/methods/dbQueries";
 
 const SubjectContext = createContext();
@@ -36,18 +38,44 @@ export const SubjectProvider = ({ children }) => {
 
   const addNote = async (title, notes, subject_id, topic_id) => {
     const res = await addNotes(title, notes, subject_id, topic_id);
+    // if (res) {
+    //   setSub((prevState) => ({
+    //     ...prevState,
+    //     notes: [res, ...prevState.notes],
+    //   }));
+    // }
     if (res) {
-      setSub((prevState) => ({
-        ...prevState,
-        notes: [res, ...prevState.notes],
-      }));
+      const now = await getAllData();
+      setSub(now);
     }
     return res;
   };
 
   const editNotes = async (notes_id, title, notes) => {
     const res = await editNotesDB(notes_id, title, notes);
-    console.log(res);
+    return res;
+  };
+
+  const delNotes = async (notes_id) => {
+    const res = await deleteNotes(notes_id);
+    // setSub((prevState) => ({
+    //   ...prevState,
+    //   notes: prevState.notes.filter((note) => note.notes_id !== notes_id),
+    // }));
+    if (!res) {
+      const now = await getAllData();
+      setSub(now);
+    }
+    return res;
+  };
+
+  const delTopics = async (topic_id) => {
+    const res = await deleteTopic(topic_id);
+    setSub((prevState) => ({
+      ...prevState,
+      notes: prevState.notes.filter((note) => note.topic_id !== topic_id),
+      topics: prevState.topics.filter((topic) => topic.topic_id !== topic_id),
+    }));
     return res;
   };
 
@@ -61,7 +89,16 @@ export const SubjectProvider = ({ children }) => {
 
   return (
     <SubjectContext.Provider
-      value={{ sub, setSub, addNewSubject, addNewTopic, editNotes, addNote }}
+      value={{
+        sub,
+        setSub,
+        addNewSubject,
+        addNewTopic,
+        editNotes,
+        addNote,
+        delNotes,
+        delTopics,
+      }}
     >
       {children}
     </SubjectContext.Provider>

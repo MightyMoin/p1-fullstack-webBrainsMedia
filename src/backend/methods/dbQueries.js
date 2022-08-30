@@ -5,9 +5,10 @@ import {
   getDocs,
   updateDoc,
   doc,
+  deleteDoc,
+  query,
+  where,
 } from "firebase/firestore";
-import uuid from "react-uuid";
-import { RedoTwoTone } from "@mui/icons-material";
 
 const subjectRef = collection(db, "subjects");
 const topicRef = collection(db, "topics");
@@ -51,10 +52,25 @@ const addNotes = async (title, notes, subject_id, topic_id) => {
 };
 
 const editNotesDB = async (notes_id, title, notes) => {
-  console.log(notes_id, title, notes);
   const presRef = doc(db, "notes", notes_id);
   const res = await updateDoc(presRef, { title, notes });
   return res;
+};
+
+const deleteNotes = async (notes_id) => {
+  const presRef = doc(db, "notes", notes_id);
+  const res = await deleteDoc(presRef);
+  return res;
+};
+
+const deleteTopic = async (topic_id) => {
+  const q = query(notesRef, where("topic_id", "==", topic_id));
+  const data = await getDocs(q);
+  data.forEach(async (el) => {
+    if (el) await deleteDoc(doc(db, "notes", el.id));
+  });
+  await deleteDoc(doc(db, "topics", topic_id));
+  return undefined;
 };
 
 const getAllData = async () => {
@@ -77,4 +93,12 @@ const getAllData = async () => {
   return finalData;
 };
 
-export { addSubject, addTopic, getAllData, addNotes, editNotesDB };
+export {
+  addSubject,
+  addTopic,
+  getAllData,
+  addNotes,
+  editNotesDB,
+  deleteNotes,
+  deleteTopic,
+};

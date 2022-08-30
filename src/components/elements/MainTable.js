@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,13 +10,13 @@ import { Typography } from "@mui/material";
 import TopicsAccordian from "./TopicsAccordian";
 import SubjectContext from "../../context/SubjectContext";
 import AddTopicsModal from "./AddTopicsModal";
+import { Box } from "@mui/system";
 
 export default function StickyHeadTable() {
   const { sub } = useContext(SubjectContext);
-  console.log(sub);
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: "80vh" }}>
+      <TableContainer sx={{height: "80vh" }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -54,9 +54,11 @@ export default function StickyHeadTable() {
                         return <></>;
                       }
                     })}
-                    <AddTopicsModal
-                      subject_id={row.subject_id}
-                    ></AddTopicsModal>
+                    <Box padding={2} >
+                      <AddTopicsModal
+                        subject_id={row.subject_id}
+                      ></AddTopicsModal>
+                    </Box>
                   </TableCell>
                 </TableRow>
               );

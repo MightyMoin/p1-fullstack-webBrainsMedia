@@ -43,9 +43,8 @@ export default function AddSubjectModal() {
 
   return (
     <div>
-      <Button onClick={handleOpen}>
+      <Button onClick={handleOpen} startIcon={<AddIcon />}>
         Add Subject
-        <AddIcon />{" "}
       </Button>
       <Modal
         aria-labelledby="transition-modal-title"

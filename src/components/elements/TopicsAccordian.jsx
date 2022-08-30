@@ -6,14 +6,19 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import NotesModal from "./NotesModal";
 import SubjectContext from "../../context/SubjectContext";
+import { Button } from "@mui/material";
 
 const TopicsAccordian = (props) => {
   const { topicName, topicNotes, subject_id, topic_id } = props;
   const [expanded, setExpanded] = useState(false);
-  const { sub } = useContext(SubjectContext);
+  const { sub, delTopics } = useContext(SubjectContext);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
+  };
+
+  const handleTopicDelete = async () => {
+    const res = await delTopics(topic_id);
   };
 
   return (
@@ -30,7 +35,9 @@ const TopicsAccordian = (props) => {
           {topicName}
         </Typography>
         <Typography sx={{ color: "text.secondary" }}>
-          {topicNotes?.length ? `${topicNotes.length} notes` : "No Notes"}
+          <Button variant="contained" color="error" onClick={handleTopicDelete}>
+            Delete
+          </Button>
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
@@ -50,6 +57,9 @@ const TopicsAccordian = (props) => {
           }
         })}
         <NotesModal
+          key="new notes"
+          title=""
+          notes=""
           isNewNotes={1}
           subject_id={subject_id}
           topic_id={topic_id}

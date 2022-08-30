@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -27,7 +27,7 @@ export default function NotesModal(props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { editNotes, addNote } = useContext(SubjectContext);
+  const { editNotes, addNote, delNotes } = useContext(SubjectContext);
   const { title, isNewNotes, notes, subject_id, topic_id, notes_id } = props;
   const [currTitle, setTitle] = useState(title);
   const [currNotes, setNotes] = useState(notes);
@@ -35,6 +35,8 @@ export default function NotesModal(props) {
   const handleNewNotesSubmit = async () => {
     const res = await addNote(currTitle, currNotes, subject_id, topic_id);
     if (res) {
+      setTitle("");
+      setNotes("");
       handleClose();
     } else {
       alert("Notes not added :(");
@@ -47,6 +49,15 @@ export default function NotesModal(props) {
       handleClose();
     } else {
       alert("Notes not updated :(");
+    }
+  };
+
+  const handleNotesDelete = async () => {
+    const res = await delNotes(notes_id);
+    if (!res) {
+      handleClose();
+    } else {
+      alert("Notes not deleted :(");
     }
   };
 
@@ -85,6 +96,13 @@ export default function NotesModal(props) {
               defaultValue={currTitle}
               onChange={(e) => setTitle(e.target.value)}
             ></TextField>
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={handleNotesDelete}
+            >
+              Delete
+            </Button>
             <Typography id="transition-modal-description" sx={{ mt: 2 }}>
               <TextField
                 label="Notes"
