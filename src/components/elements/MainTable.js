@@ -6,7 +6,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import TopicsAccordian from "./TopicsAccordian";
 import SubjectContext from "../../context/SubjectContext";
 import AddTopicsModal from "./AddTopicsModal";
@@ -14,10 +14,13 @@ import { Box } from "@mui/system";
 import EditModal from "./EditModal";
 
 export default function StickyHeadTable() {
-  const { sub } = useContext(SubjectContext);
+  const { sub, deleteSub } = useContext(SubjectContext);
+  const handleSubDelete = async (subject_id) => {
+    const res = await deleteSub(subject_id);
+  };
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{height: "80vh" }}>
+      <TableContainer sx={{ height: "80vh" }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -38,8 +41,25 @@ export default function StickyHeadTable() {
               return (
                 <TableRow role="checkbox" tabIndex={-1} key={row.subject_id}>
                   <TableCell>
-                    <Typography variant="h6">{row.name}</Typography>
-                    <EditModal type="subject" id={row.subject_id} name={row.name}></EditModal>
+                    <Box display="flex" alignItems="center">
+                      <Typography display="inline-block" variant="h6">
+                        {row.name}
+                      </Typography>
+                      <Box display="inline-flex">
+                        <EditModal
+                          type="subject"
+                          id={row.subject_id}
+                          name={row.name}
+                        ></EditModal>
+                        <Button
+                          variant="contained"
+                          color="error"
+                          onClick={() => handleSubDelete(row.subject_id)}
+                        >
+                          Delete
+                        </Button>
+                      </Box>
+                    </Box>
                   </TableCell>
                   <TableCell>
                     {sub.topics.map((topic) => {
@@ -56,7 +76,7 @@ export default function StickyHeadTable() {
                         return <></>;
                       }
                     })}
-                    <Box padding={2} >
+                    <Box padding={2}>
                       <AddTopicsModal
                         subject_id={row.subject_id}
                       ></AddTopicsModal>

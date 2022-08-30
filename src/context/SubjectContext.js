@@ -9,6 +9,7 @@ import {
   deleteTopic,
   editSubject,
   editTopic,
+  deleteSubject,
 } from "../backend/methods/dbQueries";
 
 const SubjectContext = createContext();
@@ -92,6 +93,21 @@ export const SubjectProvider = ({ children }) => {
     return res;
   };
 
+  const deleteSub = async (subject_id) => {
+    const res = await deleteSubject(subject_id);
+    setSub((prevState) => ({
+      ...prevState,
+      subjects: prevState.subjects.filter(
+        (sub) => sub.subject_id !== subject_id
+      ),
+      notes: prevState.notes.filter((note) => note.subject_id !== subject_id),
+      topics: prevState.topics.filter(
+        (topic) => topic.subject_id !== subject_id
+      ),
+    }));
+    return res;
+  };
+
   useEffect(() => {
     const mainData = async () => {
       const res = await getAllData();
@@ -113,6 +129,7 @@ export const SubjectProvider = ({ children }) => {
         delTopics,
         editSub,
         editTop,
+        deleteSub,
       }}
     >
       {children}

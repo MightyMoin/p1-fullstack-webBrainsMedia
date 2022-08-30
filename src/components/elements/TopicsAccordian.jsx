@@ -10,7 +10,7 @@ import { Button } from "@mui/material";
 import EditModal from "./EditModal";
 
 const TopicsAccordian = (props) => {
-  const { topicName, topicNotes, subject_id, topic_id } = props;
+  const { topicName, subject_id, topic_id } = props;
   const [expanded, setExpanded] = useState(false);
   const { sub, delTopics } = useContext(SubjectContext);
 

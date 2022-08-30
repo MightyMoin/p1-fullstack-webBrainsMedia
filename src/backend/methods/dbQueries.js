@@ -86,6 +86,16 @@ const deleteTopic = async (topic_id) => {
   return undefined;
 };
 
+const deleteSubject = async (subject_id) => {
+  const q = query(topicRef, where("subject_id", "==", subject_id));
+  const data = await getDocs(q);
+  data.forEach(async (el) => {
+    if (el) await deleteTopic(el.id);
+  });
+  await deleteDoc(doc(db, "subjects", subject_id));
+  return undefined;
+};
+
 const getAllData = async () => {
   const subjectData = await getDocs(subjectRef);
   const finalData = {};
@@ -116,4 +126,5 @@ export {
   deleteTopic,
   editSubject,
   editTopic,
+  deleteSubject,
 };
