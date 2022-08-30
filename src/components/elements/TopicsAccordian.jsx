@@ -7,6 +7,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import NotesModal from "./NotesModal";
 import SubjectContext from "../../context/SubjectContext";
 import { Button } from "@mui/material";
+import EditModal from "./EditModal";
 
 const TopicsAccordian = (props) => {
   const { topicName, topicNotes, subject_id, topic_id } = props;
@@ -34,6 +35,7 @@ const TopicsAccordian = (props) => {
         <Typography sx={{ width: "33%", flexShrink: 0 }}>
           {topicName}
         </Typography>
+        <EditModal type="topic" id={topic_id} name={topicName}></EditModal>
         <Typography sx={{ color: "text.secondary" }}>
           <Button variant="contained" color="error" onClick={handleTopicDelete}>
             Delete

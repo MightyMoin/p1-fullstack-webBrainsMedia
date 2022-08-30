@@ -55,6 +55,8 @@ export default function NotesModal(props) {
   const handleNotesDelete = async () => {
     const res = await delNotes(notes_id);
     if (!res) {
+      setTitle("");
+      setNotes("");
       handleClose();
     } else {
       alert("Notes not deleted :(");
@@ -90,19 +92,27 @@ export default function NotesModal(props) {
       >
         <Fade in={open}>
           <Box sx={style}>
+            <Box
+              width={"100%"}
+              display={"inline-flex"}
+              justifyContent="end"
+              alignItems={"top"}
+            >
+              <Button
+                variant="outlined"
+                color="error"
+                onClick={handleNotesDelete}
+              >
+                Delete
+              </Button>
+            </Box>
             <TextField
               label="Notes Title"
               placeholder="Add Title"
               defaultValue={currTitle}
               onChange={(e) => setTitle(e.target.value)}
             ></TextField>
-            <Button
-              variant="outlined"
-              color="error"
-              onClick={handleNotesDelete}
-            >
-              Delete
-            </Button>
+
             <Typography id="transition-modal-description" sx={{ mt: 2 }}>
               <TextField
                 label="Notes"

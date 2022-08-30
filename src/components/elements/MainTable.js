@@ -11,6 +11,7 @@ import TopicsAccordian from "./TopicsAccordian";
 import SubjectContext from "../../context/SubjectContext";
 import AddTopicsModal from "./AddTopicsModal";
 import { Box } from "@mui/system";
+import EditModal from "./EditModal";
 
 export default function StickyHeadTable() {
   const { sub } = useContext(SubjectContext);
@@ -38,6 +39,7 @@ export default function StickyHeadTable() {
                 <TableRow role="checkbox" tabIndex={-1} key={row.subject_id}>
                   <TableCell>
                     <Typography variant="h6">{row.name}</Typography>
+                    <EditModal type="subject" id={row.subject_id} name={row.name}></EditModal>
                   </TableCell>
                   <TableCell>
                     {sub.topics.map((topic) => {

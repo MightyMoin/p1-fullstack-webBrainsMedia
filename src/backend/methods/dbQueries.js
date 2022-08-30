@@ -57,6 +57,19 @@ const editNotesDB = async (notes_id, title, notes) => {
   return res;
 };
 
+const editSubject = async (subject_id, name) => {
+  const presRef = doc(db, "subjects", subject_id);
+  const res = await updateDoc(presRef, { name });
+  return res;
+};
+
+const editTopic = async (topics_id, name) => {
+  const presRef = doc(db, "topics", topics_id);
+  console.log("topic", name);
+  const res = await updateDoc(presRef, { name });
+  return res;
+};
+
 const deleteNotes = async (notes_id) => {
   const presRef = doc(db, "notes", notes_id);
   const res = await deleteDoc(presRef);
@@ -101,4 +114,6 @@ export {
   editNotesDB,
   deleteNotes,
   deleteTopic,
+  editSubject,
+  editTopic,
 };
