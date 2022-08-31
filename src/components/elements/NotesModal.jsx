@@ -1,15 +1,15 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { TextField } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import SendIcon from "@mui/icons-material/Send";
 import SubjectContext from "../../context/SubjectContext";
+import DescriptionIcon from "@mui/icons-material/Description";
 
 const style = {
   position: "absolute",
@@ -74,9 +74,8 @@ export default function NotesModal(props) {
           Add Notes
         </Button>
       ) : (
-        <Button onClick={handleOpen}>
-          {currTitle}
-          <KeyboardArrowRightIcon />{" "}
+        <Button sx={{ margin: 1 }} variant="outlined" onClick={handleOpen}>
+          <DescriptionIcon /> {currTitle}
         </Button>
       )}
       <Modal

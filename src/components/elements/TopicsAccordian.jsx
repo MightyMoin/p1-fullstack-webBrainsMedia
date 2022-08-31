@@ -35,20 +35,15 @@ const TopicsAccordian = (props) => {
         <Typography variant="h6" sx={{ width: "33%", flexShrink: 0 }}>
           {topicName}
         </Typography>
-        <EditModal
-          sx={{ zIndex: 100 }}
-          type="topic"
-          id={topic_id}
-          name={topicName}
-        ></EditModal>
-        <Typography  sx={{ color: "text.secondary" }}>
-          <Button  sx={{ zIndex: 100 }} variant="contained" color="error" onClick={handleTopicDelete}>
+        <EditModal type="topic" id={topic_id} name={topicName}></EditModal>
+        <Typography sx={{ color: "text.secondary" }}>
+          <Button variant="contained" color="error" onClick={handleTopicDelete}>
             Delete
           </Button>
         </Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <Typography varaint="h6"> Notes: </Typography>
+        <Typography varaint="h6"> Notes List: </Typography>
         <Box
           p={2}
           display="flex"
